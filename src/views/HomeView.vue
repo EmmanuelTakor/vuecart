@@ -1,18 +1,40 @@
 <template>
   <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png" />
-    <HelloWorld msg="Welcome to Your Vue.js App" />
+    <ProductDescriptionDrawer 
+    :product="product"
+    :active="active.product_drawer" /> 
+    <div class="-product-card-container">
+      <ProductSummaryCard
+        v-for="product in items"
+        :key="product.id"
+        :product="product"
+        v-on:view-prodoct="viewProduct($event )" />
+    </div>
   </div>
 </template>
 
 <script>
-// @ is an alias to /src
-import HelloWorld from "@/components/HelloWorld.vue";
-
+import items from "./data/items.js";
+import ProductSummaryCard from '../components/products/ProductSummaryCard.vue'
+import ProductDescriptionDrawer from '../components/products/ProductDescriptionDrawer.vue'
 export default {
-  name: "HomeView",
+  name: "Home",
   components: {
-    HelloWorld,
+    ProductSummaryCard, ProductDescriptionDrawer
   },
+  data() {
+    return {
+      items: items,
+      product: null,
+      active: {
+        product_drawer: false 
+      }
+    };
+  },
+  method: {
+     viewProduct(product) {
+      this.product = product
+     }
+  }
 };
 </script>
